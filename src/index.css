@@ -1,3 +1,8 @@
+html {
+  /* 1rem を 10pxにする対応 */
+  font-size: 62.5%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
