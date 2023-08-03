@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/k_colors_picker/static/css/main.073c9b0a.css",
-    "main.js": "/k_colors_picker/static/js/main.964967a6.js",
+    "main.css": "/k_colors_picker/static/css/main.84ad6783.css",
+    "main.js": "/k_colors_picker/static/js/main.96e93144.js",
     "static/js/787.04bf98b6.chunk.js": "/k_colors_picker/static/js/787.04bf98b6.chunk.js",
     "service-worker.js": "/k_colors_picker/service-worker.js",
     "static/media/logo.svg": "/k_colors_picker/static/media/logo.103b5fa18196d5665a7e12318285c916.svg",
     "index.html": "/k_colors_picker/index.html",
-    "main.073c9b0a.css.map": "/k_colors_picker/static/css/main.073c9b0a.css.map",
-    "main.964967a6.js.map": "/k_colors_picker/static/js/main.964967a6.js.map",
+    "main.84ad6783.css.map": "/k_colors_picker/static/css/main.84ad6783.css.map",
+    "main.96e93144.js.map": "/k_colors_picker/static/js/main.96e93144.js.map",
     "787.04bf98b6.chunk.js.map": "/k_colors_picker/static/js/787.04bf98b6.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.964967a6.js"
+    "static/css/main.84ad6783.css",
+    "static/js/main.96e93144.js"
   ]
 }
