@@ -123,7 +123,7 @@ export const ResultViewer: React.FC = () => {
           </Box>
           <Box sx={{ flexGrow: 1 }}>
             <FormControl fullWidth>
-              <InputLabel id="color-mode-select-label">カラーモード</InputLabel>
+              <InputLabel id="color-mode-select-label">カラー</InputLabel>
               <Select
                 labelId="color-mode-select-label"
                 id="color-mode-select"
@@ -147,7 +147,7 @@ export const ResultViewer: React.FC = () => {
         </Box>
         <Box className={styles.footer}>
           <Box sx={{ flexGrow: 1 }}></Box>
-          <Box>
+          <Box sx={{display: 'flex'}}>
             {elm.current && 650 < width ? (
               <React.Fragment>
                 <Button startIcon={<ContentCopyIcon />}>クリップボードにコピー</Button>

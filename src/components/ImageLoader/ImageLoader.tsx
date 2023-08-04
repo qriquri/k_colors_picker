@@ -28,7 +28,7 @@ export const ImageLoader: React.FC = () => {
           <Box sx={{ flexGrow: 1 }}>
             <TextField id="color-number" label="カラー数" defaultValue="5" />
           </Box>
-          <Box>
+          <Box sx={{display: 'flex'}}>
             {elm.current && 650 < width ? (
               <React.Fragment>
                 <Button startIcon={<RefreshIcon />}>再アップロード</Button>

@@ -13,7 +13,7 @@ export const AppBarContainer: React.FC = () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, height: "56px" }}
+            sx={{ height: "56px" }}
           >
             <img
               src={logo}
