@@ -10,7 +10,8 @@
 
 .contents {
   width: 100%;
-  height: 100%;  
+  /* overflow を許容するコンポーネントの高さを100%で指定してはいけない? */
+  /* height: 100%;   */
   @media (min-width: 1000px) {
     display: flex;
     flex-direction: row;

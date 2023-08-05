@@ -97,7 +97,7 @@ export const data = {
       data: labels.map(() => 5),
       borderColor: "rgb(255, 255, 255)",
       backgroundColor: "rgba(255, 255, 255)",
-    }
+    },
   ],
 };
 
@@ -114,55 +114,59 @@ export const ResultViewer: React.FC = () => {
 
   return (
     <Box className={styles.container} ref={elm}>
-      <Box className={styles.contents} sx={{ bgcolor: "grey.200" }}>
-        <Box className={styles.title}>
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="h4" fontWeight="bold" color="primary">
-              カラーテーマ
-            </Typography>
+      <Box className={styles.contentsWrapper} sx={{ bgcolor: "grey.200" }}>
+        <Box className={styles.contents}>
+          <Box className={styles.title}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="h4" fontWeight="bold" color="primary">
+                カラー
+              </Typography>
+            </Box>
+            <Box sx={{ flexGrow: 1 }}>
+              <FormControl fullWidth>
+                <InputLabel id="color-mode-select-label">カラー</InputLabel>
+                <Select
+                  labelId="color-mode-select-label"
+                  id="color-mode-select"
+                  value={colorMode}
+                  label="カラーモード"
+                  onChange={handleColorModeChange}
+                >
+                  {Object.keys(ColorModes).map((key) => {
+                    return (
+                      <MenuItem value={key} key={key}>
+                        {ColorModes[key as keyof typeof ColorModes]}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Box>
           </Box>
-          <Box sx={{ flexGrow: 1 }}>
-            <FormControl fullWidth>
-              <InputLabel id="color-mode-select-label">カラー</InputLabel>
-              <Select
-                labelId="color-mode-select-label"
-                id="color-mode-select"
-                value={colorMode}
-                label="カラーモード"
-                onChange={handleColorModeChange}
-              >
-                {Object.keys(ColorModes).map((key) => {
-                  return (
-                    <MenuItem value={key} key={key}>
-                      {ColorModes[key as keyof typeof ColorModes]}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+          <Box className={styles.main}>
+            <Bar options={options} data={data} />
           </Box>
-        </Box>
-        <Box className={styles.main}>
-          <Bar options={options} data={data} />
-        </Box>
-        <Box className={styles.footer}>
-          <Box sx={{ flexGrow: 1 }}></Box>
-          <Box sx={{display: 'flex'}}>
-            {elm.current && 650 < width ? (
-              <React.Fragment>
-                <Button startIcon={<ContentCopyIcon />}>クリップボードにコピー</Button>
-                <Button startIcon={<DownloadIcon />}>CSVダウンロード</Button>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <IconButton size="large">
-                  <ContentCopyIcon />
-                </IconButton>
-                <IconButton size="large">
-                  <DownloadIcon />
-                </IconButton>
-              </React.Fragment>
-            )}
+          <Box className={styles.footer}>
+            <Box sx={{ flexGrow: 1 }}></Box>
+            <Box sx={{ display: "flex" }}>
+              {elm.current && 650 < width ? (
+                <React.Fragment>
+                  <Button startIcon={<ContentCopyIcon />}>
+                    クリップボードにコピー
+                  </Button>
+                  <Button startIcon={<DownloadIcon />}>CSVダウンロード</Button>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <IconButton size="large">
+                    <ContentCopyIcon />
+                  </IconButton>
+                  <IconButton size="large">
+                    <DownloadIcon />
+                  </IconButton>
+                </React.Fragment>
+              )}
+            </Box>
           </Box>
         </Box>
       </Box>
