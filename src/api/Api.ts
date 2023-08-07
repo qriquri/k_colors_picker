@@ -3,7 +3,7 @@ export const postColors = async (data: {
   size: { width: number; height: number };
   colorNum: number;
 }) => {
-  const url = "http://localhost:8000/postColors";
+  const url = "https://picker_server-1-g4654832.deta.app/postColors";
   console.log("data", data);
   const param: RequestInit = {
     headers: { "content-type": "application/json; charset=UTF-8" },

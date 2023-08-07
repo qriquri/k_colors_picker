@@ -1,105 +1,18 @@
 import React, { useRef, useState } from "react";
 import {
   Box,
-  Button,
   FormControl,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
-  TextField,
   Typography,
 } from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import styles from "../style/MainContents.module.css";
 import { useComponentSize } from "../Hooks/UseComponentSize";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+import { Footer } from "./Footer";
+import { Main } from "./Main";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-export const options = {
-  indexAxis: "y" as const,
-  elements: {
-    bar: {
-      borderWidth: 2,
-    },
-  },
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "right" as const,
-    },
-    title: {
-      display: false,
-      text: "",
-    },
-  },
-  scales: {
-    x: {
-      stacked: true,
-    },
-    y: {
-      stacked: true,
-    },
-  },
-};
-
-const labels = ["Colors"];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "rgb(234,67,54)",
-      data: labels.map(() => 40),
-      borderColor: "rgb(234,67,54)",
-      backgroundColor: "rgba(234,67,54)",
-    },
-    {
-      label: "rgb(51,168,83)",
-      data: labels.map(() => 30),
-      borderColor: "rgb(51,168,83)",
-      backgroundColor: "rgba(51,168,83)",
-    },
-    {
-      label: "rgb(66,132,244)",
-      data: labels.map(() => 15),
-      borderColor: "rgb(66,132,244)",
-      backgroundColor: "rgba(66,132,244)",
-    },
-    {
-      label: "rgb(250,189,5)",
-      data: labels.map(() => 10),
-      borderColor: "rgb(250,189,5)",
-      backgroundColor: "rgba(250,189,5)",
-    },
-    {
-      label: "rgb(255,255,255)",
-      data: labels.map(() => 5),
-      borderColor: "rgb(255, 255, 255)",
-      backgroundColor: "rgba(255, 255, 255)",
-    },
-  ],
-};
 
 const ColorModes = { "0": "RGB", "1": "HSV" };
 
@@ -144,29 +57,10 @@ export const ResultViewer: React.FC = () => {
             </Box>
           </Box>
           <Box className={styles.main}>
-            <Bar options={options} data={data} />
+            <Main />
           </Box>
           <Box className={styles.footer}>
-            <Box sx={{ flexGrow: 1 }}></Box>
-            <Box sx={{ display: "flex" }}>
-              {elm.current && 650 < width ? (
-                <React.Fragment>
-                  <Button startIcon={<ContentCopyIcon />}>
-                    クリップボードにコピー
-                  </Button>
-                  <Button startIcon={<DownloadIcon />}>CSVダウンロード</Button>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <IconButton size="large">
-                    <ContentCopyIcon />
-                  </IconButton>
-                  <IconButton size="large">
-                    <DownloadIcon />
-                  </IconButton>
-                </React.Fragment>
-              )}
-            </Box>
+            <Footer width={width}/>
           </Box>
         </Box>
       </Box>

@@ -3,67 +3,89 @@ import { Box, Button, IconButton, TextField } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useDispatch } from "react-redux";
-import { IImageLoaderState, loadImg, setColorNum } from "../../slice/ImageLoaderReducer";
+import {
+  IImageLoaderState,
+  getColors,
+  loadImg,
+  setColorNum,
+} from "../../slice/ImageLoaderReducer";
 import { getNormalizedSize, img2Array } from "../../img/Img";
-import { postColors } from "../../api/Api";
 import { useSelector } from "react-redux";
-import { IState } from "../../Store";
+import { IState, store } from "../../Store";
 import { isNumber } from "../../utils/number";
+
 interface IProps {
   width: number;
 }
 
+const sendAndGetColors = () => {
+  const state = store.getState().imageLoader;
+  if (state.imgArray) {
+    const size = getNormalizedSize(state.size, 256);
+
+    store.dispatch(
+      getColors({
+        imgArray: state.imgArray,
+        size: size,
+        colorNum: state.color_num,
+      }) as any
+    );
+  }
+};
+
 export const Footer: React.FC<IProps> = (props) => {
-  const imageLoaderState = useSelector<IState, IImageLoaderState>(a => a.imageLoader)
+  const imageLoaderState = useSelector<IState, IImageLoaderState>(
+    (a) => a.imageLoader
+  );
   const dispatch = useDispatch();
 
   const onHandleColorNumChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if(isNumber(e.target.value)){
+    if (!isNumber(e.target.value)) {
       return;
     }
-    dispatch(setColorNum(Number(e.target.value)))
+    dispatch(setColorNum(Number(e.target.value)));
   };
 
   const onHandleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files as FileList; // fileの取得
-    const reader = new FileReader();
+    try {
+      const file = e.target.files as FileList; // fileの取得
+      const reader = new FileReader();
 
-    reader.readAsDataURL(file[0]); // fileの要素をdataURL形式で読み込む
+      reader.readAsDataURL(file[0]); // fileの要素をdataURL形式で読み込む
 
-    // ファイルを読み込んだ時に実行する
-    reader.onload = function () {
-      const dataUrl = reader.result; // 読み込んだファイルURL
-      const img = new Image(); // 画像
+      // ファイルを読み込んだ時に実行する
+      reader.onload = function () {
+        const dataUrl = reader.result; // 読み込んだファイルURL
+        const img = new Image(); // 画像
 
-      img.src = dataUrl as string;
-      // 画像の読み込みに成功したとき
-      img.onload = function () {
-        const imgArray = img2Array(img);
-        console.log(imgArray?.length);
-        dispatch(
-          loadImg({
-            dataUrl: dataUrl as string,
-            width: img.width,
-            height: img.height,
-            imgArray: imgArray ? Array.from(imgArray) : undefined,
-          })
-        );
-        if (imgArray) {
-          const size =  getNormalizedSize(
-            { width: img.width, height: img.height },
-            256
-          )
-
-          postColors({
-            imgArray: Array.from(imgArray),
-            size: size,
-            colorNum: imageLoaderState.color_num
-          }).then((value) => console.log(value));
-        }
+        img.src = dataUrl as string;
+        // 画像の読み込みに成功したとき
+        img.onload = function () {
+          const imgArray = img2Array(img);
+          console.log(imgArray?.length);
+          dispatch(
+            loadImg({
+              dataUrl: dataUrl as string,
+              size: { width: img.width, height: img.height },
+              imgArray: imgArray ? Array.from(imgArray) : undefined,
+            })
+          );
+          sendAndGetColors();
+        };
       };
-    };
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onClickReFlesh = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    console.log("reFlesh");
+    sendAndGetColors();
   };
 
   return (
@@ -82,7 +104,9 @@ export const Footer: React.FC<IProps> = (props) => {
       <Box sx={{ display: "flex" }}>
         {650 < props.width ? (
           <React.Fragment>
-            <Button startIcon={<RefreshIcon />}>再アップロード</Button>
+            <Button startIcon={<RefreshIcon />} onClick={onClickReFlesh}>
+              再アップロード
+            </Button>
             <label htmlFor={"icon-button-file"}>
               <input
                 id={"icon-button-file"}
@@ -98,7 +122,7 @@ export const Footer: React.FC<IProps> = (props) => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <IconButton size="large">
+            <IconButton size="large" onClick={onClickReFlesh}>
               <RefreshIcon />
             </IconButton>
             <label htmlFor="icon-button-file">
