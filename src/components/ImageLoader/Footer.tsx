@@ -4,7 +4,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useDispatch } from "react-redux";
 import { loadImg } from "../../slice/ImageLoaderReducer";
-
+import { img2Array } from "../../img/Img";
 interface IProps {
   width: number;
 }
@@ -30,11 +30,14 @@ export const Footer: React.FC<IProps> = (props) => {
       img.src = dataUrl as string;
       // 画像の読み込みに成功したとき
       img.onload = function () {
+        const imgArray = img2Array(img);
+        console.log(imgArray?.length)
         dispatch(
           loadImg({
             dataUrl: dataUrl as string,
             width: img.width,
             height: img.height,
+            imgArray: imgArray ? Array.from(imgArray) : undefined
           })
         );
       };
@@ -45,7 +48,12 @@ export const Footer: React.FC<IProps> = (props) => {
     <React.Fragment>
       <Box sx={{ flexGrow: 1 }}>
         <Box>
-          <TextField id="color-number" variant="standard" label="カラー数" defaultValue="5" />
+          <TextField
+            id="color-number"
+            variant="standard"
+            label="カラー数"
+            defaultValue="5"
+          />
         </Box>
       </Box>
       <Box sx={{ display: "flex" }}>
