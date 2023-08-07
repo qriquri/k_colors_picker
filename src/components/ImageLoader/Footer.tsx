@@ -1,22 +1,32 @@
-import React, { useRef } from "react";
-import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
+import React from "react";
+import { Box, Button, IconButton, TextField } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useDispatch } from "react-redux";
-import { loadImg } from "../../slice/ImageLoaderReducer";
-import { img2Array } from "../../img/Img";
+import { IImageLoaderState, loadImg, setColorNum } from "../../slice/ImageLoaderReducer";
+import { getNormalizedSize, img2Array } from "../../img/Img";
+import { postColors } from "../../api/Api";
+import { useSelector } from "react-redux";
+import { IState } from "../../Store";
+import { isNumber } from "../../utils/number";
 interface IProps {
   width: number;
 }
 
 export const Footer: React.FC<IProps> = (props) => {
+  const imageLoaderState = useSelector<IState, IImageLoaderState>(a => a.imageLoader)
   const dispatch = useDispatch();
-  const onHandleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.value) {
+
+  const onHandleColorNumChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if(isNumber(e.target.value)){
       return;
     }
-    console.log(e.target.value);
+    dispatch(setColorNum(Number(e.target.value)))
+  };
 
+  const onHandleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files as FileList; // fileの取得
     const reader = new FileReader();
 
@@ -31,15 +41,27 @@ export const Footer: React.FC<IProps> = (props) => {
       // 画像の読み込みに成功したとき
       img.onload = function () {
         const imgArray = img2Array(img);
-        console.log(imgArray?.length)
+        console.log(imgArray?.length);
         dispatch(
           loadImg({
             dataUrl: dataUrl as string,
             width: img.width,
             height: img.height,
-            imgArray: imgArray ? Array.from(imgArray) : undefined
+            imgArray: imgArray ? Array.from(imgArray) : undefined,
           })
         );
+        if (imgArray) {
+          const size =  getNormalizedSize(
+            { width: img.width, height: img.height },
+            256
+          )
+
+          postColors({
+            imgArray: Array.from(imgArray),
+            size: size,
+            colorNum: imageLoaderState.color_num
+          }).then((value) => console.log(value));
+        }
       };
     };
   };
@@ -52,7 +74,8 @@ export const Footer: React.FC<IProps> = (props) => {
             id="color-number"
             variant="standard"
             label="カラー数"
-            defaultValue="5"
+            defaultValue={imageLoaderState.color_num.toString()}
+            onChange={onHandleColorNumChange}
           />
         </Box>
       </Box>

@@ -5,6 +5,7 @@ export interface IImageLoaderState{
     width: number
     height: number
     imgArray: number[] | undefined
+    color_num: number
 }
 
 interface ILoadImg{
@@ -18,7 +19,8 @@ const initialState: IImageLoaderState = {
     dataUrl: undefined,
     width: 50,
     height: 50,
-    imgArray: undefined
+    imgArray: undefined,
+    color_num: 5
 }
 
 
@@ -32,11 +34,11 @@ export const ImageLoaderSlice = createSlice({
       state.height = action.payload.height;
       state.imgArray = action.payload.imgArray;
     },
-    // updateBackWeek: (state: IWeekDiffState, action: PayloadAction<number>) => {
-    //   state.backWeek = action.payload;
-    // },
+    setColorNum: (state: IImageLoaderState, action: PayloadAction<number>) => {
+      state.color_num = action.payload;
+      },
   },
 });
 
-export const { loadImg } = ImageLoaderSlice.actions;
+export const { loadImg, setColorNum } = ImageLoaderSlice.actions;
 export default ImageLoaderSlice.reducer;
