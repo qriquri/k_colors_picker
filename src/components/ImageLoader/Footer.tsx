@@ -27,7 +27,7 @@ const sendAndGetColors = () => {
       getColors({
         imgArray: state.imgArray,
         size: size,
-        colorNum: state.color_num,
+        colorNum: state.colorNum,
       }) as any
     );
   }
@@ -39,7 +39,7 @@ export const Footer: React.FC<IProps> = (props) => {
   );
   const dispatch = useDispatch();
 
-  const onHandleColorNumChange = (
+  const handleColorNumChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     if (!isNumber(e.target.value)) {
@@ -48,7 +48,7 @@ export const Footer: React.FC<IProps> = (props) => {
     dispatch(setColorNum(Number(e.target.value)));
   };
 
-  const onHandleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const file = e.target.files as FileList; // fileの取得
       const reader = new FileReader();
@@ -96,8 +96,8 @@ export const Footer: React.FC<IProps> = (props) => {
             id="color-number"
             variant="standard"
             label="カラー数"
-            defaultValue={imageLoaderState.color_num.toString()}
-            onChange={onHandleColorNumChange}
+            defaultValue={imageLoaderState.colorNum.toString()}
+            onChange={handleColorNumChange}
           />
         </Box>
       </Box>
@@ -112,7 +112,7 @@ export const Footer: React.FC<IProps> = (props) => {
                 id={"icon-button-file"}
                 type="file"
                 accept="image/*"
-                onChange={onHandleUpload}
+                onChange={handleUpload}
                 style={{ display: "none" }}
               />
               <Button startIcon={<UploadFileIcon />} component="span">
@@ -131,7 +131,7 @@ export const Footer: React.FC<IProps> = (props) => {
                 id="icon-button-file"
                 type="file"
                 style={{ display: "none" }}
-                onChange={onHandleUpload}
+                onChange={handleUpload}
               />
               <IconButton size="large" component="span">
                 <UploadFileIcon />

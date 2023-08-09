@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { postColors } from "../api/Api";
+import { min } from "../utils/number";
 
 export interface IResults {
   [prop: number]: { rgb: number[]; count: number };
@@ -9,7 +10,7 @@ export interface IImageLoaderState {
   dataUrl: string | undefined;
   size: { width: number; height: number };
   imgArray: number[] | undefined;
-  color_num: number;
+  colorNum: number;
   loading: boolean;
   results: IResults | undefined;
 }
@@ -24,7 +25,7 @@ const initialState: IImageLoaderState = {
   dataUrl: undefined,
   size: { width: 50, height: 50 },
   imgArray: undefined,
-  color_num: 5,
+  colorNum: 5,
   loading: false,
   results: undefined,
 };
@@ -42,7 +43,7 @@ export const ImageLoaderSlice = createSlice({
       if (action.payload <= 0) {
         return;
       }
-      state.color_num = action.payload;
+      state.colorNum = min([action.payload, 8]);
     },
   },
   extraReducers: (builder) => {
