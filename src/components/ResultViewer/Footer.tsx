@@ -7,6 +7,8 @@ import { IState } from "../../Store";
 import { IImageLoaderState, IResults } from "../../slice/ImageLoaderReducer";
 import { rgb2hsv } from "../../img/color";
 import { IResultViewerState } from "../../slice/ResultViewerReducer";
+import { toCsv } from "../../utils/string";
+import { download } from "../../utils/file";
 
 interface IProps {
   width: number;
@@ -51,6 +53,26 @@ export const Footer: React.FC<IProps> = (props) => {
     alert(copyText);
   }, [imageLoaderState.results, resultViewerState.colorMode]);
 
+  const handleClickDownload = useCallback(() => {
+    if (!imageLoaderState.results) {
+      return;
+    }
+    const copyText = toText(
+      imageLoaderState.results,
+      resultViewerState.colorMode
+    );
+
+    let csvHeader = "";
+    if (resultViewerState.colorMode === "rgb") {
+      csvHeader = "r,g,b";
+    } else if (resultViewerState.colorMode === "hsv") {
+      csvHeader = "h,s,v";
+    }
+
+    const csvUrl = toCsv(copyText.split("\n"), csvHeader);
+    download(csvUrl, "color.csv");
+  }, [imageLoaderState.results, resultViewerState.colorMode]);
+
   return (
     <React.Fragment>
       <Box sx={{ flexGrow: 1 }}></Box>
@@ -60,14 +82,16 @@ export const Footer: React.FC<IProps> = (props) => {
             <Button startIcon={<ContentCopyIcon />} onClick={handleClickCopy}>
               クリップボードにコピー
             </Button>
-            <Button startIcon={<DownloadIcon />}>CSVダウンロード</Button>
+            <Button startIcon={<DownloadIcon />} onClick={handleClickDownload}>
+              CSVダウンロード
+            </Button>
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <IconButton size="large">
+            <IconButton size="large" onClick={handleClickCopy}>
               <ContentCopyIcon />
             </IconButton>
-            <IconButton size="large">
+            <IconButton size="large" onClick={handleClickDownload}>
               <DownloadIcon />
             </IconButton>
           </React.Fragment>
