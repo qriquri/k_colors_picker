@@ -7,14 +7,21 @@ import {
   useSelector as rawUseSelector,
   TypedUseSelectorHook,
 } from "react-redux";
-import ImageLoaderReducer, { IImageLoaderState } from "./slice/ImageLoaderReducer";
+import ImageLoaderReducer, {
+  IImageLoaderState,
+} from "./slice/ImageLoaderReducer";
+import ResultViewerReducer, {
+  IResultViewerState,
+} from "./slice/ResultViewerReducer";
 
 export interface IState {
   imageLoader: IImageLoaderState;
+  resultViewer: IResultViewerState;
 }
 
 const rootReducer = combineReducers<IState>({
   imageLoader: ImageLoaderReducer,
+  resultViewer: ResultViewerReducer,
 });
 
 /**
@@ -26,6 +33,7 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore<IState>({
     reducer: {
       imageLoader: ImageLoaderReducer,
+      resultViewer: ResultViewerReducer,
     },
   });
 };

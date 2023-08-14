@@ -9,6 +9,7 @@ import {
   loadImg,
   setColorNum,
 } from "../../slice/ImageLoaderReducer";
+import * as ImageLoaderReducer from "../../slice/ImageLoaderReducer";
 import { getNormalizedSize, img2Array } from "../../img/Img";
 import { useSelector } from "react-redux";
 import { IState, store } from "../../Store";
@@ -27,7 +28,7 @@ const sendAndGetColors = () => {
       getColors({
         imgArray: state.imgArray,
         size: size,
-        colorNum: state.color_num,
+        colorNum: state.colorNum,
       }) as any
     );
   }
@@ -39,7 +40,7 @@ export const Footer: React.FC<IProps> = (props) => {
   );
   const dispatch = useDispatch();
 
-  const onHandleColorNumChange = (
+  const handleColorNumChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     if (!isNumber(e.target.value)) {
@@ -48,7 +49,7 @@ export const Footer: React.FC<IProps> = (props) => {
     dispatch(setColorNum(Number(e.target.value)));
   };
 
-  const onHandleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const file = e.target.files as FileList; // fileの取得
       const reader = new FileReader();
@@ -84,6 +85,10 @@ export const Footer: React.FC<IProps> = (props) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
+    if(imageLoaderState.dataUrl === ImageLoaderReducer.initialState.dataUrl){
+      alert('先ずは自分の画像をアップロードしてください。')
+      return
+    }
     console.log("reFlesh");
     sendAndGetColors();
   };
@@ -96,8 +101,9 @@ export const Footer: React.FC<IProps> = (props) => {
             id="color-number"
             variant="standard"
             label="カラー数"
-            defaultValue={imageLoaderState.color_num.toString()}
-            onChange={onHandleColorNumChange}
+            defaultValue={imageLoaderState.colorNum.toString()}
+            value={imageLoaderState.colorNum.toString()}
+            onChange={handleColorNumChange}
           />
         </Box>
       </Box>
@@ -112,7 +118,7 @@ export const Footer: React.FC<IProps> = (props) => {
                 id={"icon-button-file"}
                 type="file"
                 accept="image/*"
-                onChange={onHandleUpload}
+                onChange={handleUpload}
                 style={{ display: "none" }}
               />
               <Button startIcon={<UploadFileIcon />} component="span">
@@ -122,7 +128,7 @@ export const Footer: React.FC<IProps> = (props) => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <IconButton size="large" onClick={onClickReFlesh}>
+            <IconButton size="large" onClick={onClickReFlesh} title="再アップロード">
               <RefreshIcon />
             </IconButton>
             <label htmlFor="icon-button-file">
@@ -131,9 +137,9 @@ export const Footer: React.FC<IProps> = (props) => {
                 id="icon-button-file"
                 type="file"
                 style={{ display: "none" }}
-                onChange={onHandleUpload}
+                onChange={handleUpload}
               />
-              <IconButton size="large" component="span">
+              <IconButton size="large" component="span" title="ファイルアップロード">
                 <UploadFileIcon />
               </IconButton>
             </label>

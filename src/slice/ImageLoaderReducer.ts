@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { postColors } from "../api/Api";
+import { min } from "../utils/number";
 
 export interface IResults {
   [prop: number]: { rgb: number[]; count: number };
@@ -9,7 +10,7 @@ export interface IImageLoaderState {
   dataUrl: string | undefined;
   size: { width: number; height: number };
   imgArray: number[] | undefined;
-  color_num: number;
+  colorNum: number;
   loading: boolean;
   results: IResults | undefined;
 }
@@ -20,13 +21,20 @@ interface ILoadImg {
   imgArray: number[] | undefined;
 }
 
-const initialState: IImageLoaderState = {
-  dataUrl: undefined,
-  size: { width: 50, height: 50 },
+export const initialState: IImageLoaderState = {
+  dataUrl:
+    "https://pixabay.com/get/gc9bd0544dc56a5a02f2875d8c34fca0b9b0bbb737caa5e5bcff3f9e59e1784226d0bf7393cd900482fdbf26784c2052c4593d271ed8025d70dc0beeee2b3ffc2_1280.jpg",
+  size: { width: 1280, height: 853 },
   imgArray: undefined,
-  color_num: 5,
+  colorNum: 5,
   loading: false,
-  results: undefined,
+  results: {
+    0: { rgb: [37, 107, 167], count: 22 },
+    1: { rgb: [84,154,209], count: 22 },
+    2: { rgb: [17,40,57], count: 20 },
+    3: { rgb: [160,203,232], count: 20 },
+    4: { rgb: [117,90,41], count: 16 },
+  },
 };
 
 export const ImageLoaderSlice = createSlice({
@@ -39,10 +47,7 @@ export const ImageLoaderSlice = createSlice({
       state.imgArray = action.payload.imgArray;
     },
     setColorNum: (state: IImageLoaderState, action: PayloadAction<number>) => {
-      if (action.payload <= 0) {
-        return;
-      }
-      state.color_num = action.payload;
+      state.colorNum = min([action.payload, 8]);
     },
   },
   extraReducers: (builder) => {
