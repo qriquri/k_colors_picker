@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/k_colors_picker/static/css/main.485b63b7.css",
-    "main.js": "/k_colors_picker/static/js/main.9c0683b0.js",
+    "main.js": "/k_colors_picker/static/js/main.f51739ed.js",
     "static/js/787.04bf98b6.chunk.js": "/k_colors_picker/static/js/787.04bf98b6.chunk.js",
     "service-worker.js": "/k_colors_picker/service-worker.js",
     "index.html": "/k_colors_picker/index.html",
     "main.485b63b7.css.map": "/k_colors_picker/static/css/main.485b63b7.css.map",
-    "main.9c0683b0.js.map": "/k_colors_picker/static/js/main.9c0683b0.js.map",
+    "main.f51739ed.js.map": "/k_colors_picker/static/js/main.f51739ed.js.map",
     "787.04bf98b6.chunk.js.map": "/k_colors_picker/static/js/787.04bf98b6.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.485b63b7.css",
-    "static/js/main.9c0683b0.js"
+    "static/js/main.f51739ed.js"
   ]
 }
