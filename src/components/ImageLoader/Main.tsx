@@ -17,7 +17,7 @@ export const Main: React.FC<IProps> = ({ mWidth, mHeight }) => {
 
   const imgUrl = useMemo(() => {
     if (!imageLoaderState.dataUrl) {
-      return "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png";
+      return "https://pixabay.com/get/gc9bd0544dc56a5a02f2875d8c34fca0b9b0bbb737caa5e5bcff3f9e59e1784226d0bf7393cd900482fdbf26784c2052c4593d271ed8025d70dc0beeee2b3ffc2_1280.jpg";
     }
     return imageLoaderState.dataUrl;
   }, [imageLoaderState.dataUrl]);
@@ -38,7 +38,7 @@ export const Main: React.FC<IProps> = ({ mWidth, mHeight }) => {
       ) : (
         <img
           src={imgUrl}
-          alt="google logo"
+          alt="you submit"
           width={displaySize.width}
           height={displaySize.height}
           style={{}}

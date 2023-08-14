@@ -1,9 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { postColors } from "../api/Api";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface IResults {
-  [prop: number]: { rgb: number[]; count: number };
-}
 
 export const ColorModes = { rgb: 0, hsv: 1 };
 export type ColorMode = keyof typeof ColorModes

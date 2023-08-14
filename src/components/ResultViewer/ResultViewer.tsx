@@ -1,18 +1,9 @@
-import React, { useRef, useState } from "react";
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Typography,
-} from "@mui/material";
+import React, { useRef } from "react";
+import { Box } from "@mui/material";
 import styles from "../style/MainContents.module.css";
 import { useComponentSize } from "../Hooks/UseComponentSize";
 import { Footer } from "./Footer";
 import { Main } from "./Main";
-import { ColorMode, ColorModes } from "../../slice/ResultViewerReducer";
 import { Title } from "./Title";
 
 export const ResultViewer: React.FC = () => {
@@ -30,7 +21,7 @@ export const ResultViewer: React.FC = () => {
             <Main />
           </Box>
           <Box className={styles.footer}>
-            <Footer width={width}/>
+            <Footer width={width} />
           </Box>
         </Box>
       </Box>

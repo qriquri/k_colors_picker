@@ -9,6 +9,7 @@ import {
   loadImg,
   setColorNum,
 } from "../../slice/ImageLoaderReducer";
+import * as ImageLoaderReducer from "../../slice/ImageLoaderReducer";
 import { getNormalizedSize, img2Array } from "../../img/Img";
 import { useSelector } from "react-redux";
 import { IState, store } from "../../Store";
@@ -84,6 +85,10 @@ export const Footer: React.FC<IProps> = (props) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
+    if(imageLoaderState.dataUrl === ImageLoaderReducer.initialState.dataUrl){
+      alert('先ずは自分の画像をアップロードしてください。')
+      return
+    }
     console.log("reFlesh");
     sendAndGetColors();
   };
@@ -97,6 +102,7 @@ export const Footer: React.FC<IProps> = (props) => {
             variant="standard"
             label="カラー数"
             defaultValue={imageLoaderState.colorNum.toString()}
+            value={imageLoaderState.colorNum.toString()}
             onChange={handleColorNumChange}
           />
         </Box>
