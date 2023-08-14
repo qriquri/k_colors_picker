@@ -128,7 +128,7 @@ export const Footer: React.FC<IProps> = (props) => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <IconButton size="large" onClick={onClickReFlesh}>
+            <IconButton size="large" onClick={onClickReFlesh} title="再アップロード">
               <RefreshIcon />
             </IconButton>
             <label htmlFor="icon-button-file">
@@ -139,7 +139,7 @@ export const Footer: React.FC<IProps> = (props) => {
                 style={{ display: "none" }}
                 onChange={handleUpload}
               />
-              <IconButton size="large" component="span">
+              <IconButton size="large" component="span" title="ファイルアップロード">
                 <UploadFileIcon />
               </IconButton>
             </label>

@@ -88,10 +88,10 @@ export const Footer: React.FC<IProps> = (props) => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <IconButton size="large" onClick={handleClickCopy}>
+            <IconButton size="large" onClick={handleClickCopy} title="クリップボードにコピー">
               <ContentCopyIcon />
             </IconButton>
-            <IconButton size="large" onClick={handleClickDownload}>
+            <IconButton size="large" onClick={handleClickDownload} title="CSVダウンロード">
               <DownloadIcon />
             </IconButton>
           </React.Fragment>
