@@ -101,7 +101,6 @@ export const Footer: React.FC<IProps> = (props) => {
             id="color-number"
             variant="standard"
             label="カラー数"
-            defaultValue={imageLoaderState.colorNum.toString()}
             value={imageLoaderState.colorNum.toString()}
             onChange={handleColorNumChange}
           />

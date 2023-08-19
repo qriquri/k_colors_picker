@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import styles from "../style/MainContents.module.css";
-import { useComponentSize } from "../Hooks/UseComponentSize";
+import { useComponentSize } from "../Hooks/componentSize";
 import { Footer } from "./Footer";
 import { Main } from "./Main";
 
