@@ -14,6 +14,9 @@ import { IState } from "../../Store";
 import { IImageLoaderState, IResults } from "../../slice/ImageLoaderReducer";
 import { ColorMode, IResultViewerState } from "../../slice/ResultViewerReducer";
 import { rgb2hsv } from "../../img/color";
+import { Box } from "@mui/material";
+import styles from "../style/ResultViewer.module.css";
+import { useWindowDimensions } from "../Hooks/windowDimensions";
 
 ChartJS.register(
   CategoryScale,
@@ -24,31 +27,34 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  indexAxis: "y" as const,
-  elements: {
-    bar: {
-      borderWidth: 2,
+export const options = () => {
+  return {
+    indexAxis: "y" as const,
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
     },
-  },
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "bottom" as const,
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "bottom" as const,
+      },
+      title: {
+        display: false,
+        text: "",
+      },
     },
-    title: {
-      display: false,
-      text: "",
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+      },
     },
-  },
-  scales: {
-    x: {
-      stacked: true,
-    },
-    y: {
-      stacked: true,
-    },
-  },
+  };
 };
 
 const labels = ["Colors"];
@@ -133,15 +139,29 @@ export const Main: React.FC = () => {
   const resultViewerState = useSelector<IState, IResultViewerState>(
     (a) => a.resultViewer
   );
+  const winDim = useWindowDimensions();
   const data = useMemo(() => {
     if (!imageLoaderState.results) {
       return initialData;
     }
     return createData(imageLoaderState.results, resultViewerState.colorMode);
   }, [imageLoaderState.results, resultViewerState.colorMode]);
+
+  const customOptions = useMemo(() => {
+    const defOps = options()
+    if (winDim.width < 480) {
+      defOps.plugins.legend.display = false;
+    } else {
+      defOps.plugins.legend.display = true;
+    }
+    return defOps;
+  }, [winDim.width]);
+
   return (
     <React.Fragment>
-      <Bar options={options} data={data} />
+      <Box className={styles.wrapChart}>
+        <Bar options={customOptions} data={data} />
+      </Box>
     </React.Fragment>
   );
 };

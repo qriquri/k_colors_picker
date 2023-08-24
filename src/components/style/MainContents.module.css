@@ -5,9 +5,6 @@
   justify-content: center;
   flex-direction: row;
   flex-wrap: nowrap;
-  @media (min-width: 1000px) {
-    width: 50%;
-  }
 }
 
 .contentsWrapper {
@@ -54,4 +51,30 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+}
+
+
+@media (max-width: 959px) {
+  /* 959px以下に適用されるCSS（タブレット用） */
+  .container {
+    width: 50%;
+  }
+}
+@media (max-width: 480px) {
+  /* 480px以下に適用されるCSS（スマホ用） */
+  .container {
+    width: 100%;
+    height: 35rem;
+    margin-bottom: 2rem;
+  }
+
+  .contentsWrapper {
+    width: 85%;
+    height: 85%;
+    padding: 1rem;
+  }
+
+  .main{
+    min-height: 150px;
+  }
 }
